@@ -14,8 +14,21 @@ html, body {
   font-family: $font-family-base;
 }
 
+ul {
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
+}
+
 .Layout {
-  margin: 0 auto;
+  margin: 0 25px;
+}
+
+li.card {
+  display: inline-block;
+  margin: 10px;
 }
 
 @media (min-width: $screen-sm-min) {

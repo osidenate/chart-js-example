@@ -14,14 +14,11 @@ export default class extends Component {
     let users = this.state.users;
 
     return (
-      <div>
-        <h1>User List</h1>
         <ul>
           { users.map((user) =>
-              <li><UserCard key={user.id} user={user}></UserCard></li>
+              <li key={user.id} className="card"><UserCard user={user}></UserCard></li>
           )}
         </ul>
-      </div>
     );
   }
 
