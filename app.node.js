@@ -550,26 +550,90 @@ module.exports =
     }
 
     _createClass(UserCard, [{
+      key: 'componentWillMount',
+      value: function componentWillMount() {
+        this.setState({ avatarNotFound: false });
+      }
+    }, {
+      key: 'onAvatarError',
+      value: function onAvatarError() {
+        this.setState({ avatarNotFound: true });
+      }
+    }, {
       key: 'render',
       value: function render() {
+        var _this = this;
+
         var user = this.props.user;
+        var avatarNotFound = this.state.avatarNotFound;
+
+        var avatar = (function () {
+          if (user.avatar && !avatarNotFound) {
+            return _react2['default'].createElement('img', { className: 'photo', src: user.avatar, onError: _this.onAvatarError.bind(_this) });
+          } else {
+            var initial = user.name[0];
+            return _react2['default'].createElement(
+              'div',
+              { className: 'avatar' },
+              initial
+            );
+          }
+        })();
+
+        var impressionsTotal = 12345;
+        var conversionsTotal = 1234;
+        var revenueTotal = 1234.56;
 
         return _react2['default'].createElement(
           'div',
           { className: 'UserCard' },
           _react2['default'].createElement(
             'div',
-            { 'class': 'vcard' },
-            _react2['default'].createElement('img', { 'class': 'photo', src: user.avatar }),
+            { className: 'vcard' },
+            avatar,
             _react2['default'].createElement(
-              'h4',
-              { 'class': 'fn' },
-              user.name
+              'div',
+              { className: 'signature' },
+              _react2['default'].createElement(
+                'h4',
+                { className: 'fn' },
+                user.name
+              ),
+              _react2['default'].createElement(
+                'h6',
+                { className: 'title' },
+                user.occupation
+              )
+            )
+          ),
+          _react2['default'].createElement(
+            'div',
+            { className: 'stats' },
+            _react2['default'].createElement(
+              'div',
+              { className: 'impressions-total total' },
+              impressionsTotal
             ),
             _react2['default'].createElement(
-              'h6',
-              { 'class': 'title' },
-              user.occupation
+              'div',
+              { className: 'impressions-label' },
+              'impressions'
+            ),
+            _react2['default'].createElement(
+              'div',
+              { className: 'conversions-total total' },
+              conversionsTotal
+            ),
+            _react2['default'].createElement(
+              'div',
+              { className: 'conversions-label' },
+              'conversions'
+            ),
+            _react2['default'].createElement(
+              'div',
+              { className: 'revenue-total total' },
+              '$',
+              revenueTotal
             )
           )
         );
@@ -843,24 +907,15 @@ module.exports =
         var users = this.state.users;
 
         return _react2['default'].createElement(
-          'div',
+          'ul',
           null,
-          _react2['default'].createElement(
-            'h1',
-            null,
-            'User List'
-          ),
-          _react2['default'].createElement(
-            'ul',
-            null,
-            users.map(function (user) {
-              return _react2['default'].createElement(
-                'li',
-                null,
-                _react2['default'].createElement(_componentsUserCard2['default'], { key: user.id, user: user })
-              );
-            })
-          )
+          users.map(function (user) {
+            return _react2['default'].createElement(
+              'li',
+              { key: user.id, className: 'card' },
+              _react2['default'].createElement(_componentsUserCard2['default'], { user: user })
+            );
+          })
         );
       }
     }]);
@@ -880,7 +935,7 @@ module.exports =
 
 
   // module
-  exports.push([module.id, "/**\r\n * React Static Boilerplate\r\n * https://github.com/koistya/react-static-boilerplate\r\n * Copyright (c) Konstantin Tarkus (@koistya) | MIT license\r\n */\r\n\r\n/**\r\n * React Static Boilerplate\r\n * https://github.com/koistya/react-static-boilerplate\r\n * Copyright (c) Konstantin Tarkus (@koistya) | MIT license\r\n */\r\n\r\n/*\r\n * Scaffolding\r\n * -------------------------------------------------------------------------- */\r\n\r\n/*\r\n * Typography\r\n * -------------------------------------------------------------------------- */\r\n\r\n/*\r\n * Media queries breakpoints\r\n * -------------------------------------------------------------------------- */\r\n\r\nhtml, body {\r\n  margin: 0;\r\n  padding: 0;\r\n  background-color: #f7f7f7;\r\n  color: #333;\r\n  font-family: 'Roboto','Helvetica',sans-serif;\r\n}\r\n\r\n.Layout {\r\n  margin: 0 auto;\r\n}\r\n\r\n@media (min-width: 768px) {\r\n  .Layout {\r\n    width: calc(768px - 18px);\r\n  }\r\n}\r\n\r\n@media (min-width: 992px) {\r\n  .Layout {\r\n    width: calc(992px - 22px);\r\n  }\r\n}\r\n\r\n@media (min-width: 1200px) {\r\n  .Layout {\r\n    width: calc(1200px - 30px);\r\n  }\r\n}\r\n", ""]);
+  exports.push([module.id, "/**\n * React Static Boilerplate\n * https://github.com/koistya/react-static-boilerplate\n * Copyright (c) Konstantin Tarkus (@koistya) | MIT license\n */\n\n/**\n * React Static Boilerplate\n * https://github.com/koistya/react-static-boilerplate\n * Copyright (c) Konstantin Tarkus (@koistya) | MIT license\n */\n\n/*\n * Scaffolding\n * -------------------------------------------------------------------------- */\n\n/*\n * Typography\n * -------------------------------------------------------------------------- */\n\n/*\n * Media queries breakpoints\n * -------------------------------------------------------------------------- */\n\nhtml, body {\n  margin: 0;\n  padding: 0;\n  background-color: rgb(127, 140, 141);\n  color: #333;\n  font-family: 'Roboto','Helvetica',sans-serif;\n}\n\nul {\n  padding-left: 0;\n}\n\nli {\n  list-style: none;\n}\n\n.Layout {\n  margin: 0 25px;\n}\n\nli.card {\n  display: inline-block;\n  margin: 10px;\n}\n\n@media (min-width: 768px) {\n  .Layout {\n    width: calc(768px - 18px);\n  }\n}\n\n@media (min-width: 992px) {\n  .Layout {\n    width: calc(992px - 22px);\n  }\n}\n\n@media (min-width: 1200px) {\n  .Layout {\n    width: calc(1200px - 30px);\n  }\n}\n", ""]);
 
   // exports
 
@@ -908,7 +963,7 @@ module.exports =
 
 
   // module
-  exports.push([module.id, "/**\r\n * React Static Boilerplate\r\n * https://github.com/koistya/react-static-boilerplate\r\n * Copyright (c) Konstantin Tarkus (@koistya) | MIT license\r\n */\r\n\r\n/**\r\n * React Static Boilerplate\r\n * https://github.com/koistya/react-static-boilerplate\r\n * Copyright (c) Konstantin Tarkus (@koistya) | MIT license\r\n */\r\n\r\n/*\r\n * Scaffolding\r\n * -------------------------------------------------------------------------- */\r\n\r\n/*\r\n * Typography\r\n * -------------------------------------------------------------------------- */\r\n\r\n/*\r\n * Media queries breakpoints\r\n * -------------------------------------------------------------------------- */\r\n\r\n.Navigation {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: -ms-flexbox;\r\n  display: flex;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n      -ms-flex-direction: row;\r\n          flex-direction: row;\r\n  margin: 2em 0 5em 0;\r\n  list-style: none;\r\n  -webkit-box-pack: end;\r\n  -webkit-justify-content: flex-end;\r\n      -ms-flex-pack: end;\r\n          justify-content: flex-end;\r\n}\r\n\r\n.Navigation-item {\r\n  padding: 0 2em;\r\n}\r\n\r\n.Navigation-link {\r\n  padding: 0.5em 1em;\r\n  color: #21ce99;\r\n  text-decoration: none;\r\n  text-transform: uppercase;\r\n  cursor: pointer;\r\n}\r\n\r\n.Navigation-link:hover {\r\n  border-bottom: 3px solid #21ce99;\r\n  color: #333;\r\n}\r\n", ""]);
+  exports.push([module.id, "/**\r\n * React Static Boilerplate\r\n * https://github.com/koistya/react-static-boilerplate\r\n * Copyright (c) Konstantin Tarkus (@koistya) | MIT license\r\n */\r\n\r\n/**\n * React Static Boilerplate\n * https://github.com/koistya/react-static-boilerplate\n * Copyright (c) Konstantin Tarkus (@koistya) | MIT license\n */\n\n/*\n * Scaffolding\n * -------------------------------------------------------------------------- */\n\n/*\n * Typography\n * -------------------------------------------------------------------------- */\n\n/*\n * Media queries breakpoints\n * -------------------------------------------------------------------------- */\r\n\r\n.Navigation {\r\n  display: -webkit-box;\r\n  display: -webkit-flex;\r\n  display: -ms-flexbox;\r\n  display: flex;\r\n  -webkit-box-orient: horizontal;\r\n  -webkit-box-direction: normal;\r\n  -webkit-flex-direction: row;\r\n      -ms-flex-direction: row;\r\n          flex-direction: row;\r\n  margin: 2em 0 5em 0;\r\n  list-style: none;\r\n  -webkit-box-pack: end;\r\n  -webkit-justify-content: flex-end;\r\n      -ms-flex-pack: end;\r\n          justify-content: flex-end;\r\n}\r\n\r\n.Navigation-item {\r\n  padding: 0 2em;\r\n}\r\n\r\n.Navigation-link {\r\n  padding: 0.5em 1em;\r\n  color: #333;\r\n  text-decoration: none;\r\n  text-transform: uppercase;\r\n  cursor: pointer;\r\n}\r\n\r\n.Navigation-link:hover {\r\n  border-bottom: 3px solid #333;\r\n  color: #333;\r\n}\r\n", ""]);
 
   // exports
 
@@ -922,7 +977,7 @@ module.exports =
 
 
   // module
-  exports.push([module.id, ".UserCard {\n  border: 1px dashed red;\n}\n", ""]);
+  exports.push([module.id, ".UserCard {\n  position: relative;\n  height: 160px;\n  width: 300px;\n  padding: 10px;\n  background-color: #fff;\n  border: 4px solid #000;\n  border-radius: 10px;\n}\n.UserCard .photo, .UserCard .avatar {\n  position: absolute;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  height: 80px;\n  width: 80px;\n  border-radius: 50%;\n}\n.UserCard .avatar {\n  font-weight: bold;\n  font-size: 2.5em;\n  color: #fff;\n  padding-top: 15px;\n  padding-left: 27px;\n  background-color: rgb(58, 153, 216);\n}\n.UserCard .signature {\n  position: absolute;\n  top: 0;\n  left: 0;\n  margin-left: 100px;\n}\n.UserCard .signature h4, .UserCard .signature h6 {\n  margin: 0;\n}\n.UserCard .signature h4 {\n  margin-top: 15px;\n  font-size: 1.5em;\n  font-weight: bold;\n}\n.UserCard .signature h6 {\n  margin-left: 10px;\n  font-size: 0.9em;\n  color: rgb(149, 165, 166);\n}\n.UserCard .stats {\n  position: absolute;\n  bottom: 15px;\n  right: 20px;\n  text-align: right;\n  color: rgb(189, 195, 199);\n  font-size: 0.9em;\n}\n.UserCard .stats .total {\n  margin-top: 5px;\n  font-weight: bold;\n  font-size: 1.1em;\n}\n.UserCard .stats .impressions-total {\n  color: rgb(228, 126, 48);\n}\n.UserCard .stats .conversions-total {\n  color: rgb(47, 129, 183);\n}\n.UserCard .stats .revenue-total {\n  color: rgb(48, 173, 99);\n}\n", ""]);
 
   // exports
 
