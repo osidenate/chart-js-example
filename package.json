@@ -1,5 +1,8 @@
 {
   "dependencies": {
+    "chart.js": "git+https://github.com/nnnick/Chart.js.git",
+    "lodash": "^3.10.1",
+    "react-chartjs": "git+https://github.com/netsyno/react-chartjs.git",
     "reqwest": "^2.0.5"
   },
   "devDependencies": {

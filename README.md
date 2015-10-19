@@ -8,6 +8,7 @@
 &nbsp; &nbsp; ✓ Displays a list of User Cards retrieved from `users.json`<br>
 &nbsp; &nbsp; ✓ Each card has the user's avatar, name, and occupation<br>
 &nbsp; &nbsp; ✓ Each card has the sum of all conversions, impressions, and revenue collected from `logs.json`<br>
+&nbsp; &nbsp; ✓ A simple chart showing conversions per day is displayed using Chart.js<br>
 &nbsp; &nbsp; ✓ If an avatar isn't found, the first letter of the person's name is displayed instead (Works mostly)<br>
 &nbsp; &nbsp; ✓ Uses SCSS instead of vanilla CSS<br>
 &nbsp; &nbsp; ✓ Uses Facebook React for building the user interface<br>

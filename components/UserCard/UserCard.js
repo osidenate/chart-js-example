@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import { Line } from 'react-chartjs';
+import invert from 'lodash/object/invert';
 import './UserCard.scss';
 
 class UserCard extends Component {
@@ -14,6 +16,34 @@ class UserCard extends Component {
 
   onAvatarError() {
     this.setState({ avatarNotFound: true });
+  }
+
+  renderConversionsChart() {
+    let lineChart = null;
+    let chartOptions = {
+      showScale: false,
+      pointDotRadius: 2,
+      datasetFill: false
+    };
+
+    if (this.props.stats.chartData) {
+      let chartData = [];
+      let data = this.props.stats.chartData;
+      let chartDates = Object.keys(data).sort();
+      chartDates.forEach((date) => chartData.push(data[date]));
+
+      let chart = {
+        labels: chartDates,
+        datasets: [{
+          label: 'conversions',
+          data: chartData
+        }]
+      };
+
+      lineChart = <Line data={chart} options={chartOptions}/>;
+    }
+
+    return lineChart;
   }
 
   render() {
@@ -33,6 +63,8 @@ class UserCard extends Component {
       }
     })();
 
+    let conversionsChart = this.renderConversionsChart();
+
     return (
       <div className="UserCard">
         <div className="vcard">
@@ -49,10 +81,12 @@ class UserCard extends Component {
           <div className="conversions-label">conversions</div>
           <div className="revenue-total total">${revenue.toFixed(2)}</div>
         </div>
+        <div className="chart">
+          {conversionsChart}
+        </div>
       </div>
     );
   }
-
 }
 
 export default UserCard;

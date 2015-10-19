@@ -37,7 +37,6 @@ export default class extends Component {
 
   componentDidMount() {
     this.loadUserStats();
-    // TODO this.loadChartData();
   }
 
   render() {
