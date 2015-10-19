@@ -19,6 +19,9 @@ class UserCard extends Component {
   render() {
     let user = this.props.user;
     let avatarNotFound = this.state.avatarNotFound;
+    let impressions = this.props.stats.impressions || 0;
+    let conversions = this.props.stats.conversions || 0;
+    let revenue = this.props.stats.revenue || 0;
 
     let avatar = (() => {
       if (user.avatar && !avatarNotFound) {
@@ -40,11 +43,11 @@ class UserCard extends Component {
           </div>
         </div>
         <div className="stats">
-          <div className="impressions-total total">{this.props.stats.impressions}</div>
+          <div className="impressions-total total">{impressions}</div>
           <div className="impressions-label">impressions</div>
-          <div className="conversions-total total">{this.props.stats.conversions}</div>
+          <div className="conversions-total total">{conversions}</div>
           <div className="conversions-label">conversions</div>
-          <div className="revenue-total total">${this.props.stats.revenue.toFixed(2)}</div>
+          <div className="revenue-total total">${revenue.toFixed(2)}</div>
         </div>
       </div>
     );

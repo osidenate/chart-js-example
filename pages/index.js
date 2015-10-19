@@ -48,7 +48,7 @@ export default class extends Component {
       <ul>
         {
           users.map((user) =>
-            <li key={user.id} className="card"><UserCard user={user} stats={userStats[user.id]}></UserCard></li>)
+            <li key={user.id} className="card"><UserCard user={user} stats={userStats[user.id] || {}}></UserCard></li>)
         }
       </ul>
     );
