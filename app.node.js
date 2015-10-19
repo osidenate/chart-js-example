@@ -80,14 +80,10 @@ module.exports =
   var _componentsLayout2 = _interopRequireDefault(_componentsLayout);
 
   var routes = {
-    '/404': function _() {
+    '/about': function about() {
       return __webpack_require__(9);
-    }, '/500': function _() {
-      return __webpack_require__(10);
-    }, '/about': function about() {
-      return __webpack_require__(11);
     }, '/': function _() {
-      return __webpack_require__(12);
+      return __webpack_require__(10);
     } }; // Auto-generated on build. See tools/lib/routes-loader.js
 
   var route = function route(path, callback) {
@@ -230,11 +226,11 @@ module.exports =
 
   var _fbjsLibExecutionEnvironment = __webpack_require__(4);
 
-  var _historyLibCreateBrowserHistory = __webpack_require__(19);
+  var _historyLibCreateBrowserHistory = __webpack_require__(17);
 
   var _historyLibCreateBrowserHistory2 = _interopRequireDefault(_historyLibCreateBrowserHistory);
 
-  var _historyLibUseQueries = __webpack_require__(20);
+  var _historyLibUseQueries = __webpack_require__(18);
 
   var _historyLibUseQueries2 = _interopRequireDefault(_historyLibUseQueries);
 
@@ -279,7 +275,7 @@ module.exports =
 
   var _react2 = _interopRequireDefault(_react);
 
-  __webpack_require__(13);
+  __webpack_require__(11);
 
   var _Navigation = __webpack_require__(7);
 
@@ -354,7 +350,7 @@ module.exports =
 
   var _react2 = _interopRequireDefault(_react);
 
-  __webpack_require__(14);
+  __webpack_require__(12);
 
   var _libLocation = __webpack_require__(3);
 
@@ -465,7 +461,7 @@ module.exports =
 
   var _react2 = _interopRequireDefault(_react);
 
-  __webpack_require__(15);
+  __webpack_require__(13);
 
   var _Link = __webpack_require__(6);
 
@@ -538,7 +534,13 @@ module.exports =
 
   var _react2 = _interopRequireDefault(_react);
 
-  __webpack_require__(16);
+  var _reactChartjs = __webpack_require__(20);
+
+  var _lodashObjectInvert = __webpack_require__(19);
+
+  var _lodashObjectInvert2 = _interopRequireDefault(_lodashObjectInvert);
+
+  __webpack_require__(14);
 
   var UserCard = (function (_Component) {
     _inherits(UserCard, _Component);
@@ -560,9 +562,44 @@ module.exports =
         this.setState({ avatarNotFound: true });
       }
     }, {
+      key: 'renderConversionsChart',
+      value: function renderConversionsChart() {
+        var _this = this;
+
+        var lineChart = null;
+        var chartOptions = {
+          showScale: false,
+          pointDotRadius: 2,
+          datasetFill: false
+        };
+
+        if (this.props.stats.chartData) {
+          (function () {
+            var chartData = [];
+            var data = _this.props.stats.chartData;
+            var chartDates = Object.keys(data).sort();
+            chartDates.forEach(function (date) {
+              return chartData.push(data[date]);
+            });
+
+            var chart = {
+              labels: chartDates,
+              datasets: [{
+                label: 'conversions',
+                data: chartData
+              }]
+            };
+
+            lineChart = _react2['default'].createElement(_reactChartjs.Line, { data: chart, options: chartOptions });
+          })();
+        }
+
+        return lineChart;
+      }
+    }, {
       key: 'render',
       value: function render() {
-        var _this = this;
+        var _this2 = this;
 
         var user = this.props.user;
         var avatarNotFound = this.state.avatarNotFound;
@@ -572,7 +609,7 @@ module.exports =
 
         var avatar = (function () {
           if (user.avatar && !avatarNotFound) {
-            return _react2['default'].createElement('img', { className: 'photo', src: user.avatar, onError: _this.onAvatarError.bind(_this) });
+            return _react2['default'].createElement('img', { className: 'photo', src: user.avatar, onError: _this2.onAvatarError.bind(_this2) });
           } else {
             var initial = user.name[0];
             return _react2['default'].createElement(
@@ -582,6 +619,8 @@ module.exports =
             );
           }
         })();
+
+        var conversionsChart = this.renderConversionsChart();
 
         return _react2['default'].createElement(
           'div',
@@ -634,6 +673,11 @@ module.exports =
               '$',
               revenue.toFixed(2)
             )
+          ),
+          _react2['default'].createElement(
+            'div',
+            { className: 'chart' },
+            conversionsChart
           )
         );
       }
@@ -700,142 +744,6 @@ module.exports =
           _react2['default'].createElement(
             'h1',
             null,
-            'Not Found'
-          ),
-          _react2['default'].createElement(
-            'p',
-            null,
-            'The page you\'re looking for was not found.'
-          )
-        );
-      }
-    }]);
-
-    return _default;
-  })(_react.Component);
-
-  exports['default'] = _default;
-  module.exports = exports['default'];
-
-/***/ },
-/* 10 */
-/***/ function(module, exports, __webpack_require__) {
-
-  /**
-   * React Static Boilerplate
-   * https://github.com/koistya/react-static-boilerplate
-   * Copyright (c) Konstantin Tarkus (@koistya) | MIT license
-   */
-
-  'use strict';
-
-  Object.defineProperty(exports, '__esModule', {
-    value: true
-  });
-
-  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-  var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-  function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-  var _react = __webpack_require__(1);
-
-  var _react2 = _interopRequireDefault(_react);
-
-  var _default = (function (_Component) {
-    _inherits(_default, _Component);
-
-    function _default() {
-      _classCallCheck(this, _default);
-
-      _get(Object.getPrototypeOf(_default.prototype), 'constructor', this).apply(this, arguments);
-    }
-
-    _createClass(_default, [{
-      key: 'render',
-      value: function render() {
-        return _react2['default'].createElement(
-          'div',
-          null,
-          _react2['default'].createElement(
-            'h1',
-            null,
-            'Error'
-          ),
-          _react2['default'].createElement(
-            'pre',
-            null,
-            this.props.error ? this.props.error.message + '\n\n' + this.props.error.stack : 'A critical error occurred.'
-          )
-        );
-      }
-    }], [{
-      key: 'propTypes',
-      value: {
-        error: _react.PropTypes.instanceOf(Error)
-      },
-      enumerable: true
-    }]);
-
-    return _default;
-  })(_react.Component);
-
-  exports['default'] = _default;
-  module.exports = exports['default'];
-
-/***/ },
-/* 11 */
-/***/ function(module, exports, __webpack_require__) {
-
-  /**
-   * React Static Boilerplate
-   * https://github.com/koistya/react-static-boilerplate
-   * Copyright (c) Konstantin Tarkus (@koistya) | MIT license
-   */
-
-  'use strict';
-
-  Object.defineProperty(exports, '__esModule', {
-    value: true
-  });
-
-  var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-  var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
-
-  function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-  function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-  function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-  var _react = __webpack_require__(1);
-
-  var _react2 = _interopRequireDefault(_react);
-
-  var _default = (function (_Component) {
-    _inherits(_default, _Component);
-
-    function _default() {
-      _classCallCheck(this, _default);
-
-      _get(Object.getPrototypeOf(_default.prototype), 'constructor', this).apply(this, arguments);
-    }
-
-    _createClass(_default, [{
-      key: 'render',
-      value: function render() {
-        return _react2['default'].createElement(
-          'div',
-          null,
-          _react2['default'].createElement(
-            'h1',
-            null,
             'About Us'
           ),
           _react2['default'].createElement(
@@ -854,7 +762,7 @@ module.exports =
   module.exports = exports['default'];
 
 /***/ },
-/* 12 */
+/* 10 */
 /***/ function(module, exports, __webpack_require__) {
 
   'use strict';
@@ -881,11 +789,11 @@ module.exports =
 
   var _componentsUserCard2 = _interopRequireDefault(_componentsUserCard);
 
-  var _staticDataUsersJson = __webpack_require__(17);
+  var _staticDataUsersJson = __webpack_require__(15);
 
   var _staticDataUsersJson2 = _interopRequireDefault(_staticDataUsersJson);
 
-  var _workerLibLogCounterJs = __webpack_require__(18);
+  var _workerLibLogCounterJs = __webpack_require__(16);
 
   var _workerLibLogCounterJs2 = _interopRequireDefault(_workerLibLogCounterJs);
 
@@ -939,7 +847,6 @@ module.exports =
       key: 'componentDidMount',
       value: function componentDidMount() {
         this.loadUserStats();
-        // TODO this.loadChartData();
       }
     }, {
       key: 'render',
@@ -968,7 +875,7 @@ module.exports =
   module.exports = exports['default'];
 
 /***/ },
-/* 13 */
+/* 11 */
 /***/ function(module, exports, __webpack_require__) {
 
   exports = module.exports = __webpack_require__(2)();
@@ -982,7 +889,7 @@ module.exports =
 
 
 /***/ },
-/* 14 */
+/* 12 */
 /***/ function(module, exports, __webpack_require__) {
 
   exports = module.exports = __webpack_require__(2)();
@@ -996,7 +903,7 @@ module.exports =
 
 
 /***/ },
-/* 15 */
+/* 13 */
 /***/ function(module, exports, __webpack_require__) {
 
   exports = module.exports = __webpack_require__(2)();
@@ -1010,7 +917,7 @@ module.exports =
 
 
 /***/ },
-/* 16 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
   exports = module.exports = __webpack_require__(2)();
@@ -1018,13 +925,13 @@ module.exports =
 
 
   // module
-  exports.push([module.id, ".UserCard {\n  position: relative;\n  height: 160px;\n  width: 300px;\n  padding: 10px;\n  background-color: #fff;\n  border: 4px solid #000;\n  border-radius: 10px;\n}\n.UserCard .photo, .UserCard .avatar {\n  position: absolute;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  height: 80px;\n  width: 80px;\n  border-radius: 50%;\n}\n.UserCard .avatar {\n  font-weight: bold;\n  font-size: 2.5em;\n  color: #fff;\n  padding-top: 15px;\n  padding-left: 27px;\n  background-color: rgb(58, 153, 216);\n}\n.UserCard .signature {\n  position: absolute;\n  top: 0;\n  left: 0;\n  margin-left: 100px;\n}\n.UserCard .signature h4, .UserCard .signature h6 {\n  margin: 0;\n}\n.UserCard .signature h4 {\n  margin-top: 15px;\n  font-size: 1.5em;\n  font-weight: bold;\n}\n.UserCard .signature h6 {\n  margin-left: 10px;\n  font-size: 0.9em;\n  color: rgb(149, 165, 166);\n}\n.UserCard .stats {\n  position: absolute;\n  bottom: 15px;\n  right: 20px;\n  text-align: right;\n  color: rgb(189, 195, 199);\n  font-size: 0.9em;\n}\n.UserCard .stats .total {\n  margin-top: 5px;\n  font-weight: bold;\n  font-size: 1.1em;\n}\n.UserCard .stats .impressions-total {\n  color: rgb(228, 126, 48);\n}\n.UserCard .stats .conversions-total {\n  color: rgb(47, 129, 183);\n}\n.UserCard .stats .revenue-total {\n  color: rgb(48, 173, 99);\n}\n", ""]);
+  exports.push([module.id, ".UserCard {\n  position: relative;\n  height: 200px;\n  width: 340px;\n  padding: 10px;\n  background-color: #fff;\n  border: 4px solid #000;\n  border-radius: 10px;\n}\n.UserCard .photo, .UserCard .avatar {\n  position: absolute;\n  -webkit-box-sizing: border-box;\n          box-sizing: border-box;\n  height: 80px;\n  width: 80px;\n  border-radius: 50%;\n}\n.UserCard .avatar {\n  font-weight: bold;\n  font-size: 2.5em;\n  color: #fff;\n  padding-top: 15px;\n  padding-left: 27px;\n  background-color: rgb(58, 153, 216);\n}\n.UserCard .signature {\n  position: absolute;\n  top: 0;\n  left: 0;\n  margin-left: 100px;\n}\n.UserCard .signature h4, .UserCard .signature h6 {\n  margin: 0;\n}\n.UserCard .signature h4 {\n  margin-top: 15px;\n  font-size: 1.5em;\n  font-weight: bold;\n}\n.UserCard .signature h6 {\n  margin-left: 10px;\n  font-size: 0.9em;\n  color: rgb(149, 165, 166);\n}\n.UserCard .stats {\n  position: absolute;\n  bottom: 15px;\n  right: 20px;\n  text-align: right;\n  color: rgb(189, 195, 199);\n  font-size: 0.9em;\n}\n.UserCard .stats .total {\n  margin-top: 5px;\n  font-weight: bold;\n  font-size: 1.1em;\n}\n.UserCard .stats .impressions-total {\n  color: rgb(228, 126, 48);\n}\n.UserCard .stats .conversions-total {\n  color: rgb(47, 129, 183);\n}\n.UserCard .stats .revenue-total {\n  color: rgb(48, 173, 99);\n}\n.UserCard .chart {\n  position: absolute;\n  bottom: 15px;\n  left: 20px;\n  width: 100px;\n  height: 80px;\n}\n.UserCard .chart canvas {\n  width: 175px !important;\n  height: 80px !important;\n}\n", ""]);
 
   // exports
 
 
 /***/ },
-/* 17 */
+/* 15 */
 /***/ function(module, exports) {
 
   module.exports = [
@@ -1529,24 +1436,36 @@ module.exports =
   ];
 
 /***/ },
-/* 18 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
   module.exports = function() {
-  	return new Worker(__webpack_require__.p + "b4c8764d8cee3a4105f0.worker.js");
+  	return new Worker(__webpack_require__.p + "61ddbe22e412b9362202.worker.js");
   };
 
 /***/ },
-/* 19 */
+/* 17 */
 /***/ function(module, exports) {
 
   module.exports = require("history/lib/createBrowserHistory");
 
 /***/ },
-/* 20 */
+/* 18 */
 /***/ function(module, exports) {
 
   module.exports = require("history/lib/useQueries");
+
+/***/ },
+/* 19 */
+/***/ function(module, exports) {
+
+  module.exports = require("lodash/object/invert");
+
+/***/ },
+/* 20 */
+/***/ function(module, exports) {
+
+  module.exports = require("react-chartjs");
 
 /***/ },
 /* 21 */
