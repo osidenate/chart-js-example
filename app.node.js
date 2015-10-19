@@ -65,7 +65,7 @@ module.exports =
 
   var _react2 = _interopRequireDefault(_react);
 
-  var _reactDom = __webpack_require__(20);
+  var _reactDom = __webpack_require__(21);
 
   var _reactDom2 = _interopRequireDefault(_reactDom);
 
@@ -230,11 +230,11 @@ module.exports =
 
   var _fbjsLibExecutionEnvironment = __webpack_require__(4);
 
-  var _historyLibCreateBrowserHistory = __webpack_require__(18);
+  var _historyLibCreateBrowserHistory = __webpack_require__(19);
 
   var _historyLibCreateBrowserHistory2 = _interopRequireDefault(_historyLibCreateBrowserHistory);
 
-  var _historyLibUseQueries = __webpack_require__(19);
+  var _historyLibUseQueries = __webpack_require__(20);
 
   var _historyLibUseQueries2 = _interopRequireDefault(_historyLibUseQueries);
 
@@ -566,6 +566,9 @@ module.exports =
 
         var user = this.props.user;
         var avatarNotFound = this.state.avatarNotFound;
+        var impressions = this.props.stats.impressions || 0;
+        var conversions = this.props.stats.conversions || 0;
+        var revenue = this.props.stats.revenue || 0;
 
         var avatar = (function () {
           if (user.avatar && !avatarNotFound) {
@@ -579,10 +582,6 @@ module.exports =
             );
           }
         })();
-
-        var impressionsTotal = 12345;
-        var conversionsTotal = 1234;
-        var revenueTotal = 1234.56;
 
         return _react2['default'].createElement(
           'div',
@@ -612,7 +611,7 @@ module.exports =
             _react2['default'].createElement(
               'div',
               { className: 'impressions-total total' },
-              impressionsTotal
+              impressions
             ),
             _react2['default'].createElement(
               'div',
@@ -622,7 +621,7 @@ module.exports =
             _react2['default'].createElement(
               'div',
               { className: 'conversions-total total' },
-              conversionsTotal
+              conversions
             ),
             _react2['default'].createElement(
               'div',
@@ -633,7 +632,7 @@ module.exports =
               'div',
               { className: 'revenue-total total' },
               '$',
-              revenueTotal
+              revenue.toFixed(2)
             )
           )
         );
@@ -641,7 +640,8 @@ module.exports =
     }], [{
       key: 'propTypes',
       value: {
-        user: _react.PropTypes.object.isRequired
+        user: _react.PropTypes.object.isRequired,
+        stats: _react.PropTypes.object.isRequired
       },
       enumerable: true
     }]);
@@ -885,6 +885,14 @@ module.exports =
 
   var _staticDataUsersJson2 = _interopRequireDefault(_staticDataUsersJson);
 
+  var _workerLibLogCounterJs = __webpack_require__(18);
+
+  var _workerLibLogCounterJs2 = _interopRequireDefault(_workerLibLogCounterJs);
+
+  var _reqwest = __webpack_require__(22);
+
+  var _reqwest2 = _interopRequireDefault(_reqwest);
+
   var _default = (function (_Component) {
     _inherits(_default, _Component);
 
@@ -895,16 +903,49 @@ module.exports =
     }
 
     _createClass(_default, [{
+      key: 'loadUserStats',
+      value: function loadUserStats() {
+        var _this = this;
+
+        var logCounterWorker = new _workerLibLogCounterJs2['default']();
+
+        logCounterWorker.onmessage = function (msg) {
+          var data = msg.data;
+          if (data.event === 'updateTotals') {
+            _this.setState({ userStats: data.payload });
+          }
+        };
+
+        (0, _reqwest2['default'])({
+          url: 'data/logs.json',
+          method: 'GET',
+          success: function success(response) {
+            logCounterWorker.postMessage({
+              event: 'calculateTotals',
+              payload: response
+            });
+          }
+        });
+      }
+    }, {
       key: 'componentWillMount',
       value: function componentWillMount() {
         this.setState({
-          users: _staticDataUsersJson2['default']
+          users: _staticDataUsersJson2['default'],
+          userStats: {}
         });
+      }
+    }, {
+      key: 'componentDidMount',
+      value: function componentDidMount() {
+        this.loadUserStats();
+        // TODO this.loadChartData();
       }
     }, {
       key: 'render',
       value: function render() {
         var users = this.state.users;
+        var userStats = this.state.userStats;
 
         return _react2['default'].createElement(
           'ul',
@@ -913,7 +954,7 @@ module.exports =
             return _react2['default'].createElement(
               'li',
               { key: user.id, className: 'card' },
-              _react2['default'].createElement(_componentsUserCard2['default'], { user: user })
+              _react2['default'].createElement(_componentsUserCard2['default'], { user: user, stats: userStats[user.id] || {} })
             );
           })
         );
@@ -1489,21 +1530,35 @@ module.exports =
 
 /***/ },
 /* 18 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-  module.exports = require("history/lib/createBrowserHistory");
+  module.exports = function() {
+  	return new Worker(__webpack_require__.p + "b4c8764d8cee3a4105f0.worker.js");
+  };
 
 /***/ },
 /* 19 */
 /***/ function(module, exports) {
 
-  module.exports = require("history/lib/useQueries");
+  module.exports = require("history/lib/createBrowserHistory");
 
 /***/ },
 /* 20 */
 /***/ function(module, exports) {
 
+  module.exports = require("history/lib/useQueries");
+
+/***/ },
+/* 21 */
+/***/ function(module, exports) {
+
   module.exports = require("react-dom");
+
+/***/ },
+/* 22 */
+/***/ function(module, exports) {
+
+  module.exports = require("reqwest");
 
 /***/ }
 /******/ ]);
