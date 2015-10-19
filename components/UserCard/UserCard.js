@@ -4,7 +4,8 @@ import './UserCard.scss';
 class UserCard extends Component {
 
   static propTypes = {
-    user: PropTypes.object.isRequired
+    user: PropTypes.object.isRequired,
+    stats: PropTypes.object.isRequired,
   };
 
   componentWillMount() {
@@ -29,10 +30,6 @@ class UserCard extends Component {
       }
     })();
 
-    let impressionsTotal = 12345;
-    let conversionsTotal = 1234;
-    let revenueTotal = 1234.56;
-
     return (
       <div className="UserCard">
         <div className="vcard">
@@ -43,11 +40,11 @@ class UserCard extends Component {
           </div>
         </div>
         <div className="stats">
-          <div className="impressions-total total">{impressionsTotal}</div>
+          <div className="impressions-total total">{this.props.stats.impressions}</div>
           <div className="impressions-label">impressions</div>
-          <div className="conversions-total total">{conversionsTotal}</div>
+          <div className="conversions-total total">{this.props.stats.conversions}</div>
           <div className="conversions-label">conversions</div>
-          <div className="revenue-total total">${revenueTotal}</div>
+          <div className="revenue-total total">${this.props.stats.revenue.toFixed(2)}</div>
         </div>
       </div>
     );
