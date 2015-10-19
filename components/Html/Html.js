@@ -18,14 +18,13 @@ class Html extends Component {
 
   render() {
     return (
-      <html className="no-js" lang="">
+      <html className="no-js" lang="en-US">
       <head>
         <meta charSet="utf-8" />
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <title>{this.props.title || title}</title>
         <meta name="description" content={this.props.description || description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="apple-touch-icon" href="apple-touch-icon.png" />
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto" />
         <script src={'app.js?' + new Date().getTime()}></script>
       </head>
