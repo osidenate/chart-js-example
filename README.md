@@ -40,7 +40,7 @@ Just clone the repo, install Node.js modules and run `npm start`:
 
 ```
 $ git clone https://github.com/osidenate/chart-js-example.git 
-$ cd MyApp
+$ cd chart-js-example
 $ npm install
 $ npm start
 ```
